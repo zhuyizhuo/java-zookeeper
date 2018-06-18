@@ -32,10 +32,8 @@ public class CuratorWatchDemo {
     //监听子节点的增删改
     private static void addlistenerWithPathChildCache(CuratorFramework curator, String path) throws Exception {
         PathChildrenCache pathChildrenCache = new PathChildrenCache(curator,path,true);
-        PathChildrenCacheListener pathChildrenCacheListener = new PathChildrenCacheListener() {
-            public void childEvent(CuratorFramework curatorFramework, PathChildrenCacheEvent pathChildrenCacheEvent) throws Exception {
+        PathChildrenCacheListener pathChildrenCacheListener = (curatorFramework, pathChildrenCacheEvent) -> {
                 System.out.println("Recived event : " + pathChildrenCacheEvent.getType() +"->"+ pathChildrenCacheEvent.getData().getPath());
-            }
         };
         pathChildrenCache.getListenable().addListener(pathChildrenCacheListener);
         pathChildrenCache.start(PathChildrenCache.StartMode.NORMAL);
